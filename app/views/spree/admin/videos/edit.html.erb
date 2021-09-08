@@ -1,0 +1,17 @@
+<% content_for :page_title do %>
+  <%= link_to "Videos", spree.admin_videos_url %> /
+  <%= @video.name %>
+<% end %>
+
+
+<% content_for :page_actions do %>
+  <%= video_preview_link(@video.slug) %>
+<% end %>
+
+
+<%= form_for [:admin, @video] do |f| %>
+  <fieldset>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= render partial: 'spree/admin/shared/edit_resource_links' %>
+  </fieldset>
+<% end %>

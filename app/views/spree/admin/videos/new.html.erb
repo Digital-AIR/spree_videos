@@ -1,0 +1,11 @@
+<% content_for :page_title do %>
+  <%= link_to "Videos", spree.admin_videos_url %> /
+  <%= "New Video" %>
+<% end %>
+
+<%= form_for [:admin, @video] do |f| %>
+  <fieldset>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= render partial: 'spree/admin/shared/new_resource_links' %>
+  </fieldset>
+<% end %>

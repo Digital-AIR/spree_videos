@@ -1,0 +1,74 @@
+<% content_for :page_title do %>
+  <%= "Videos" %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to "New Video", new_admin_video_url, { class: "btn-success", icon: 'add', id: 'new_admin_video_url' } %>
+<% end%>
+
+
+<% content_for :table_filter do %>
+  <div data-hook="admin_videos_index_search">
+    <%= search_form_for [:admin, @search] do |f| %>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= label_tag :q_name_cont, Spree.t(:name) %>
+            <%= f.text_field :name_cont, tabindex: 1, class: "form-control js-quick-search-target" %>
+          </div>
+        </div>
+
+        <% if current_spree_user.has_spree_role?("admin") %>
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= label_tag :q_vendor_name_cont, "Vendor"%>
+              <%= f.text_field :vendor_name_cont, tabindex: 1, class: "form-control js-quick-search-target" %>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+      <div data-hook="admin_vendors_index_search_buttons" class="form-actions">
+        <%= button Spree.t(:filter_results), 'search' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @videos.any? %>
+<div class="table-responsive">
+  <table class="table" id='listing_videos' data-hook>
+    <thead>
+      <tr data-hook="video_header">
+        <th><%= "Name" %></th>
+        <th><%= "Slug" %></th>
+        <th><%= "Available On" %></th>
+        <th><%= "Discontinue On" %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @videos.each do |video|
+           @edit_url = edit_admin_video_url(video)
+           @delete_url = admin_video_url(video) %>
+
+        <tr id="<%= spree_dom_id video %>" data-hook="tax_row">
+          <td><%= video.name %></td>
+          <td><%= video.slug %></td>
+          <td><%= video.available_on %></td>
+          <td><%= video.discontinue_on %></td>
+          <td class="actions">
+            <span class="d-flex justify-content-end">
+              <%= link_to_edit(video, no_text: true) if can? :edit, video %>
+              <%= link_to_delete(video, no_text: true)if can? :delete, video , method: :delete%>
+            </span>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Video)) %>
+  </div>
+<% end %>
