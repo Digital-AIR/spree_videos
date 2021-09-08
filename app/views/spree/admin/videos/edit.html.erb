@@ -3,15 +3,11 @@
   <%= @video.name %>
 <% end %>
 
-<<<<<<< HEAD
-
 <% content_for :page_actions do %>
   <%= video_preview_link(@video.slug) %>
 <% end %>
 
 
-=======
->>>>>>> 5ebaaa3 (Video Extension)
 <%= form_for [:admin, @video] do |f| %>
   <fieldset>
     <%= render partial: 'form', locals: { f: f } %>

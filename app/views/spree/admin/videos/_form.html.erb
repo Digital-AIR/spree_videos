@@ -1,5 +1,5 @@
 <%= render partial: 'spree/admin/shared/error_messages', locals: { target: @video } %>
-<<<<<<< HEAD
+
 <div class="form-group">
 
     <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
@@ -57,40 +57,17 @@
     <% else %>
       <div class="alert alert-info"><%= Spree.t(:no_resource_found, resource: :products) %></div>
     <% end %>
-=======
-
-<div class="form-group">
-
-  <%= f.field_container :taxon_id do %>
-    <%= f.label :taxon_id %>
-    <%= select_tag :taxon_id, nil, class: 'form-control' %>
-  <% end %>
-
-  <%= f.field_container :primary_product_id do %>
-    <%= f.label :primary_product_id %>
-    <%= collection_select(:primary_product_id, 0, @available_products, :id, :name,{ include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
-  <% end %>
-
-
-  <%= f.field_container :secondary_products do %>
-    <%= f.label :secondary_products %>
-    <%= collection_select(:product_ids, 0, @available_products, :id, :name,{ include_blank: Spree.t('match_choices.none')}, { class: 'select2', multiple: true }) %>
->>>>>>> 5ebaaa3 (Video Extension)
   <% end %>
 
   <%= f.field_container :name do %>
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control' %>
-<<<<<<< HEAD
     <%= f.error_message_on :name %>
-=======
->>>>>>> 5ebaaa3 (Video Extension)
   <% end %>
 
   <%= f.field_container :slug do %>
     <%= f.label :slug %>
     <%= f.text_field :slug, class: 'form-control' %>
-<<<<<<< HEAD
     <%= f.error_message_on :slug %>
   <% end %><br>
 
@@ -100,55 +77,35 @@
     <%= f.file_field :upload_video %>
     <%= link_to image_tag(main_app.url_for(@video.upload_video.try(:attachment))), main_app.rails_blob_url(@video.upload_video.attachment) if @video.upload_video %>
     <%= f.error_message_on :upload_video %>
-=======
->>>>>>> 5ebaaa3 (Video Extension)
   <% end %>
 
   <%= f.field_container :description do %>
     <%= f.label :description %>
-<<<<<<< HEAD
     <%= f.text_area :description, { rows: "10", class: "form-control spree-rte" } %>
     <%= f.error_message_on :description %>
-=======
-    <%= f.text_area :description, class: 'form-control' %>
->>>>>>> 5ebaaa3 (Video Extension)
   <% end %>
 
   <%= f.field_container :seo_title do %>
     <%= f.label :seo_title %>
     <%= f.text_field :seo_title, class: 'form-control' %>
-<<<<<<< HEAD
     <%= f.error_message_on :seo_title %>
-=======
->>>>>>> 5ebaaa3 (Video Extension)
   <% end %>
 
   <%= f.field_container :seo_description do %>
     <%= f.label :seo_description %>
     <%= f.text_area :seo_description, class: 'form-control' %>
-<<<<<<< HEAD
     <%= f.error_message_on :seo_description %>
-=======
->>>>>>> 5ebaaa3 (Video Extension)
   <% end %>
 
   <%= f.field_container :available_on do %>
     <%= f.label :available_on %>
     <%= f.date_field :available_on, class: 'form-control' %>
-<<<<<<< HEAD
     <%= f.error_message_on :available_on %>
-=======
->>>>>>> 5ebaaa3 (Video Extension)
   <% end %>
 
   <%= f.field_container :discontinue_on do %>
     <%= f.label :discontinue_on %>
     <%= f.date_field :discontinue_on, class: 'form-control' %>
-<<<<<<< HEAD
     <%= f.error_message_on :discontinue_on %>
-=======
->>>>>>> 5ebaaa3 (Video Extension)
   <% end %>
-
-
 </div>
