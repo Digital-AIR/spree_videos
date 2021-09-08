@@ -1,5 +1,6 @@
 Spree::Core::Engine.add_routes do
   # Add your extension routes here
+<<<<<<< HEAD
   namespace :admin do
   	resources :videos
   end
@@ -12,4 +13,6 @@ Spree::Core::Engine.add_routes do
 	  end
 	end
   end						
+=======
+>>>>>>> 661b9d7 (second commit)
 end
