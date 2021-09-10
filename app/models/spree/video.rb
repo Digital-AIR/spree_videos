@@ -3,6 +3,7 @@ class Spree::Video < ActiveRecord::Base
               presence: true,
               uniqueness: { case_sensitive: false }
 
+<<<<<<< HEAD
 
     validates :slug, uniqueness: true
     validates_associated :upload_video 
@@ -18,4 +19,10 @@ class Spree::Video < ActiveRecord::Base
 
 	has_many :video_taxons, class_name: 'Spree::VideoTaxon'
 	has_many :taxons, through: :video_taxons, class_name: 'Spree::Taxon'
+=======
+    validates :slug, uniqueness: true
+    has_many :video_secondary_products
+
+	has_many :products, through: :video_secondary_products, class_name: 'Spree::Product'
+>>>>>>> 5ebaaa3 (Video Extension)
 end

@@ -8,8 +8,14 @@ class CreateVideos < SpreeExtension::Migration[6.1]
       t.text :seo_description
       t.date :available_on
       t.date :discontinue_on
+<<<<<<< HEAD
 
       t.references :primary_product, foreign_key: { to_table: 'spree_products' }      
+=======
+      # t.references :taxon, foreign_key: true
+      t.references :primary_product, foreign_key: { to_table: 'spree_products' }
+      
+>>>>>>> 5ebaaa3 (Video Extension)
       t.timestamps
     end
   end

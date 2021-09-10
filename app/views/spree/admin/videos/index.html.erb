@@ -6,6 +6,7 @@
   <%= button_link_to "New Video", new_admin_video_url, { class: "btn-success", icon: 'add', id: 'new_admin_video_url' } %>
 <% end%>
 
+<<<<<<< HEAD
 
 <% content_for :table_filter do %>
   <div data-hook="admin_videos_index_search">
@@ -35,6 +36,8 @@
   </div>
 <% end %>
 
+=======
+>>>>>>> 5ebaaa3 (Video Extension)
 <% if @videos.any? %>
 <div class="table-responsive">
   <table class="table" id='listing_videos' data-hook>
@@ -60,7 +63,11 @@
           <td class="actions">
             <span class="d-flex justify-content-end">
               <%= link_to_edit(video, no_text: true) if can? :edit, video %>
+<<<<<<< HEAD
               <%= link_to_delete(video, no_text: true)if can? :delete, video , method: :delete%>
+=======
+              <%= link_to_delete(video, no_text: true) if can? :delete, video %>
+>>>>>>> 5ebaaa3 (Video Extension)
             </span>
         </tr>
       <% end %>
