@@ -1,0 +1,57 @@
+<%= render partial: 'spree/admin/shared/error_messages', locals: { target: @video } %>
+
+<div class="form-group">
+
+  <%= f.field_container :taxon_id do %>
+    <%= f.label :taxon_id %>
+    <%= select_tag :taxon_id, nil, class: 'form-control' %>
+  <% end %>
+
+  <%= f.field_container :primary_product do %>
+    <%= f.label :primary_product %>
+    <%= collection_select(:primary_product, 0, @available_products, :id, :name,{ include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
+  <% end %>
+
+
+  <%= f.field_container :secondary_products do %>
+    <%= f.label :secondary_products %>
+    <%= collection_select(:product_ids, 0, @available_products, :id, :name,{ include_blank: Spree.t('match_choices.none')}, { class: 'select2', multiple: true }) %>
+  <% end %>
+
+  <%= f.field_container :name do %>
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
+  <% end %>
+
+  <%= f.field_container :slug do %>
+    <%= f.label :slug %>
+    <%= f.text_field :slug, class: 'form-control' %>
+  <% end %>
+
+  <%= f.field_container :description do %>
+    <%= f.label :description %>
+    <%= f.text_area :description, class: 'form-control' %>
+  <% end %>
+
+  <%= f.field_container :seo_title do %>
+    <%= f.label :seo_title %>
+    <%= f.text_field :seo_title, class: 'form-control' %>
+  <% end %>
+
+  <%= f.field_container :seo_description do %>
+    <%= f.label :seo_description %>
+    <%= f.text_area :seo_description, class: 'form-control' %>
+  <% end %>
+
+  <%= f.field_container :available_on do %>
+    <%= f.label :available_on %>
+    <%= f.date_field :available_on, class: 'form-control' %>
+  <% end %>
+
+  <%= f.field_container :discontinue_on do %>
+    <%= f.label :discontinue_on %>
+    <%= f.date_field :discontinue_on, class: 'form-control' %>
+  <% end %>
+
+
+</div>
