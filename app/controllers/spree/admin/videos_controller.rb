@@ -69,8 +69,12 @@ module Spree
           redirect_to spree.admin_videos_url, notice: 'Video was successfully updated.'
 =======
         if @video.update(video_params)
+<<<<<<< HEAD
           redirect_to @video, notice: 'Video was successfully updated.'
 >>>>>>> 5ebaaa3 (Video Extension)
+=======
+          redirect_to spree.admin_videos_url, notice: 'Video was successfully updated.'
+>>>>>>> 1a8a85c (Video Extension.)
         else
           render :edit
         end
@@ -79,6 +83,7 @@ module Spree
       # DELETE /videos/1
       def destroy
         @video.destroy
+<<<<<<< HEAD
 <<<<<<< HEAD
         if @video.destroy
           flash[:success] = 'Video was successfully destroyed.'
@@ -92,6 +97,9 @@ module Spree
 =======
         redirect_to videos_url, notice: 'Video was successfully destroyed.'
 >>>>>>> 5ebaaa3 (Video Extension)
+=======
+        redirect_to spree.admin_videos_url, notice: 'Video was successfully destroyed.'
+>>>>>>> 1a8a85c (Video Extension.)
       end
 
       private
@@ -116,6 +124,7 @@ module Spree
         # Only allow a list of trusted parameters through.
         def video_params
 <<<<<<< HEAD
+<<<<<<< HEAD
           params.require(:video).permit(:vendor_id, :name,:slug,:description,:seo_title,:seo_description,:available_on,:discontinue_on,:primary_product_id,:upload_video, product_ids: [], taxon_ids:[] )
         end
 
@@ -134,6 +143,9 @@ module Spree
           @vendors = Vendor.order(Arel.sql('LOWER(name)'))
 =======
           params.fetch(:video, {}).permit(:name,:slug,:description,:seo_title,:seo_description, :primary_product, product_ids: [])
+=======
+          params.fetch(:video, {}).permit(:name,:slug,:description,:seo_title,:seo_description, :primary_product_id, product_ids: [])
+>>>>>>> 1a8a85c (Video Extension.)
         end
 
         def load_data

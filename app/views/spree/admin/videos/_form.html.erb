@@ -66,9 +66,9 @@
     <%= select_tag :taxon_id, nil, class: 'form-control' %>
   <% end %>
 
-  <%= f.field_container :primary_product do %>
-    <%= f.label :primary_product %>
-    <%= collection_select(:primary_product, 0, @available_products, :id, :name,{ include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
+  <%= f.field_container :primary_product_id do %>
+    <%= f.label :primary_product_id %>
+    <%= collection_select(:primary_product_id, 0, @available_products, :id, :name,{ include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
   <% end %>
 
 
