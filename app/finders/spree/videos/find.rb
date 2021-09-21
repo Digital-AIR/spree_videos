@@ -9,9 +9,8 @@ module Spree
       end
 
       def execute
-        p "edoweodij"
         videos = by_taxons(scope)
-        videos = by_vendors(scope)
+        videos = by_vendors(videos)
 
         videos
       end
