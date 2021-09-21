@@ -51,7 +51,6 @@
       <% @videos.each do |video|
            @edit_url = edit_admin_video_url(video)
            @delete_url = spree.admin_video_url(video) %>
-
         <tr id="<%= spree_dom_id video %>" data-hook="tax_row">
           <td><%= video.name %></td>
           <td><%= video.slug %></td>

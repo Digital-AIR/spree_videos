@@ -19,6 +19,9 @@ module Spree
                      end
       end
 
+      # GET /videos/1
+      def show
+      end
 
       # GET /videos/new
       def new
@@ -103,6 +106,7 @@ module Spree
           @taxons = Taxon.order(:name)
           @vendors = Vendor.order(Arel.sql('LOWER(name)'))
         end
+
     end
   end
 end

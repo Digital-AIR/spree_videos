@@ -6,7 +6,6 @@ class Spree::Video < ActiveRecord::Base
     validates :slug, uniqueness: true
     validates_associated :upload_video 
     
-
     has_one :vendor
     has_one :primary_product, class_name: 'Product'
     has_one :upload_video, as: :viewable, dependent: :destroy, class_name: 'Spree::VideoUploadVideo'
