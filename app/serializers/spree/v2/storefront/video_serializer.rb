@@ -10,6 +10,8 @@ module Spree
         has_many :taxons
         has_one :upload_video, serializer: :upload_video
         has_one :primary_product, serializer: :product
+        has_one :vendor
+
       end
     end
   end
