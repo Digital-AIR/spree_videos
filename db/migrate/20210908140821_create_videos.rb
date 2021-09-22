@@ -8,9 +8,7 @@ class CreateVideos < SpreeExtension::Migration[6.1]
       t.text :seo_description
       t.date :available_on
       t.date :discontinue_on
-      # t.references :taxon, foreign_key: true
-      t.references :primary_product, foreign_key: { to_table: 'spree_products' }
-      
+      t.references :primary_product, foreign_key: { to_table: 'spree_products' }      
       t.timestamps
     end
   end

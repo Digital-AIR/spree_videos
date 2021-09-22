@@ -2,56 +2,111 @@
 
 <div class="form-group">
 
-  <%= f.field_container :taxon_id do %>
-    <%= f.label :taxon_id %>
-    <%= select_tag :taxon_id, nil, class: 'form-control' %>
+    <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
+        <%= f.field_container :vendor do %>
+          <%= f.label :vendor_id, Spree.t(:vendor) %>
+          <%= f.collection_select(:vendor_id, @vendors, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
+          <%= f.error_message_on :vendor %>
+        <% end %>
+    <% end %>
+
+
+
+   <%= f.field_container :taxons do %>
+    <%= f.label :taxon_ids, "Taxons" %>
+    <% if can? :modify, Spree::VideoTaxon %>
+      <%= f.select :taxon_ids, options_from_collection_for_select(@taxons, :id, :pretty_name, @video.taxon_ids),
+                                { include_hidden: true },
+                                  multiple: true,
+                                  data: { autocomplete_url_value: 'taxons_api_v2',
+                                          autocomplete_return_attr_value: 'pretty_name',
+                                          autocomplete_multiple_value: true }, class: 'select2'%>
+    <% elsif @video.products.any? %>
+      <ul class="text_list">
+        <% @video.taxons.each do |taxon| %>
+          <li><%= taxon.pretty_name %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <div class="alert alert-info"><%= Spree.t(:no_resource_found, resource: :taxons) %></div>
+    <% end %>
   <% end %>
 
-  <%= f.field_container :primary_product do %>
-    <%= f.label :primary_product %>
-    <%= collection_select(:primary_product, 0, @available_products, :id, :name,{ include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
+  <%= f.field_container :primary_product_id do %>
+    <%= f.label :primary_product_id %>
+    <%= f.collection_select(:primary_product_id,@products, :id, :name,{ include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
+    <%= f.error_message_on :primary_product_id %>
   <% end %>
 
 
-  <%= f.field_container :secondary_products do %>
-    <%= f.label :secondary_products %>
-    <%= collection_select(:product_ids, 0, @available_products, :id, :name,{ include_blank: Spree.t('match_choices.none')}, { class: 'select2', multiple: true }) %>
+  <%= f.field_container :products do %>
+    <%= f.label :product_ids, "Secondary Products" %>
+    <% if can? :modify, Spree::VideoSecondaryProduct %>
+      <%= f.select :product_ids, options_from_collection_for_select(@products, :id, :name, @video.product_ids),
+                                { include_hidden: true },
+                                  multiple: true,
+                                  data: { autocomplete_url_value: 'videos_api_v2',
+                                          autocomplete_return_attr_value: 'name',
+                                          autocomplete_multiple_value: true }, class: 'select2'%>
+    <% elsif @video.products.any? %>
+      <ul class="text_list">
+        <% @video.products.each do |product| %>
+          <li><%= product.name %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <div class="alert alert-info"><%= Spree.t(:no_resource_found, resource: :products) %></div>
+    <% end %>
   <% end %>
 
   <%= f.field_container :name do %>
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control' %>
+    <%= f.error_message_on :name %>
   <% end %>
 
   <%= f.field_container :slug do %>
     <%= f.label :slug %>
     <%= f.text_field :slug, class: 'form-control' %>
+    <%= f.error_message_on :slug %>
+  <% end %><br>
+
+
+  <%= f.field_container :upload_video do %>
+    <%= f.label :upload_video %>
+    <%= f.file_field :upload_video %>
+    <%= link_to image_tag(main_app.url_for(@video.upload_video.try(:attachment))), main_app.rails_blob_url(@video.upload_video.attachment) if @video.upload_video %>
+    <%= f.error_message_on :upload_video %>
   <% end %>
 
   <%= f.field_container :description do %>
     <%= f.label :description %>
-    <%= f.text_area :description, class: 'form-control' %>
+    <%= f.text_area :description, { rows: "10", class: "form-control spree-rte" } %>
+    <%= f.error_message_on :description %>
   <% end %>
 
   <%= f.field_container :seo_title do %>
     <%= f.label :seo_title %>
     <%= f.text_field :seo_title, class: 'form-control' %>
+    <%= f.error_message_on :seo_title %>
   <% end %>
 
   <%= f.field_container :seo_description do %>
     <%= f.label :seo_description %>
     <%= f.text_area :seo_description, class: 'form-control' %>
+    <%= f.error_message_on :seo_description %>
   <% end %>
 
   <%= f.field_container :available_on do %>
     <%= f.label :available_on %>
     <%= f.date_field :available_on, class: 'form-control' %>
+    <%= f.error_message_on :available_on %>
   <% end %>
 
   <%= f.field_container :discontinue_on do %>
     <%= f.label :discontinue_on %>
     <%= f.date_field :discontinue_on, class: 'form-control' %>
+    <%= f.error_message_on :discontinue_on %>
   <% end %>
-
-
+  
 </div>

@@ -1,13 +1,15 @@
 # SpreeVideos
 
-Introduction goes here.
+Spree video extension allows admin and vendors to upload videos to the website.
+
+### Note: This extension is dependent on spree_multi_vendors extension.
 
 ## Installation
 
 1. Add this extension to your Gemfile with this line:
 
     ```ruby
-    gem 'spree_videos'
+    gem 'spree_videos', , github: 'Digital-AIR/spree_videos', branch: 'main'
     ```
 
 2. Install the gem using Bundler
