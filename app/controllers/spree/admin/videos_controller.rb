@@ -79,9 +79,22 @@ module Spree
           @search = videos.ransack(params[:q])
 
           @collection = @search.result.
+              includes(video_includes).
               page(params[:page]).
               per(params[:per_page])
         end
+
+
+        def video_includes
+        {
+          products: [],
+          taxons: [],
+          upload_video: [],
+          vendor: [],
+          primary_product: []
+        }
+
+      end
 
         def set_video
           @video = Video.find(params[:id])
