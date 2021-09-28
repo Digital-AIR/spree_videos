@@ -39,6 +39,7 @@ module Spree
           if permitted_resource_params[:upload_video]
             @video.create_upload_video(attachment: permitted_resource_params.delete(:upload_video))
           end
+          redirect_to spree.admin_videos_url, notice: 'Video was successfully created.'
         else
           render :new
         end

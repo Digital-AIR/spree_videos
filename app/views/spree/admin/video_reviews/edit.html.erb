@@ -1,0 +1,19 @@
+<% content_for :page_title do %>
+  <%= @video_review.video.name %>
+<% end %>
+<%= form_for [:admin, @video_review] do |f| %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= render 'form', f: f %>
+    </div>
+    <div class="col-md-6">
+      <% unless @video_review.title.blank? %>
+        <h2><%= @video_review.title %></h2>
+      <% end %>
+      <blockquote>
+        <%= simple_format(@video_review.review) %>
+      </blockquote>
+    </div>
+  </div>
+  <%= render 'spree/admin/shared/edit_resource_links' %>
+<% end %>
