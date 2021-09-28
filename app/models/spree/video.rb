@@ -5,7 +5,6 @@ class Spree::Video < ActiveRecord::Base
 
     validates :slug, uniqueness: true
     validates_associated :upload_video 
-    
 
     has_one :vendor, class_name: 'Spree::Vendor',primary_key: 'vendor_id',  foreign_key: 'id'
 
