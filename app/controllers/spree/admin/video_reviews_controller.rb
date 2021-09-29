@@ -49,11 +49,6 @@ module Spree
           Spree::VideoReview.accessible_by(current_ability)
       end
 
-      # def collection
-      #   params[:q] ||= {}
-      #   @search = Spree::VideoReview.ransack(params[:q])
-      #   @collection = @search.result.includes([:video, :user, :video_feedback_reviews]).page(params[:page]).per(params[:per_page])
-      # end
     end
   end
 end
