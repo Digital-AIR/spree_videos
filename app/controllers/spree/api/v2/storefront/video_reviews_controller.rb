@@ -14,13 +14,16 @@ module Spree
           end
 
  	      def create
-            # params[:video_review][:rating].sub!(/\s*[^0-9]*\z/, '') unless params[:video_review][:rating].blank?
-            video_review = Spree::VideoReview.new(review_params)
-		    video_review.user = spree_current_user 
-		    video_review.ip_address = request.remote_ip
-		    video_review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
-		    authorize! :create, Spree::VideoReview
-		    video_review.save
+          video_review = Spree::VideoReview.new(review_params)
+          video_review.video = Spree::Video.find_by(id: params[:video_review][:video])
+          if not video_review.video
+            video_review.video = Spree::Video.find_by(slug: params[:video_review][:video])
+          end
+		      video_review.user = spree_current_user 
+		      video_review.ip_address = request.remote_ip
+		      video_review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
+
+		      video_review.save
 		  
 		    if video_review.persisted?
 		      render_serialized_payload { serialize_resource(video_review) }
@@ -33,7 +36,7 @@ module Spree
 	      private
 
 	      def permitted_video_review_attributes
-	        [:rating, :title, :review, :name, :video_id, :show_identifier]
+	        [:rating, :title, :review, :name, :show_identifier]
 	      end
 
 	      def review_params

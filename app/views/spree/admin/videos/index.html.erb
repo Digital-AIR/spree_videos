@@ -17,6 +17,15 @@
           </div>
         </div>
 
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= label_tag :q_slug_cont, Spree.t(:slug) %>
+            <%= f.text_field :slug_cont, tabindex: 1, class: "form-control js-quick-search-target" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
         <% if current_spree_user.has_spree_role?("admin") %>
           <div class="col-md-6">
             <div class="form-group">
@@ -25,8 +34,8 @@
             </div>
           </div>
         <% end %>
-
       </div>
+
       <div data-hook="admin_vendors_index_search_buttons" class="form-actions">
         <%= button Spree.t(:filter_results), 'search' %>
       </div>

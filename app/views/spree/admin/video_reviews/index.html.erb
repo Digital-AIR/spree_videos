@@ -75,8 +75,7 @@
     <tbody>
       <% @collection.each do |review| %>
         <tr data-hook="admin_video_reviews_index_rows" id="<%= dom_id review %>" class="<%= cycle('odd', 'even') %>">
-          <td><%= link_to_if review.video, review.video.name%></td>
-
+          <td><%= link_to_if review.video, review.video.name, edit_admin_video_path(review.video) %></td>
           <td><%= txt_stars(review.rating) %></td>         
           <td><%= review.user_id ? link_to(review.user.try(:email), admin_user_path(review.user)) : Spree.t(:anonymous) %></td>
           <td><%= link_to_if review.ip_address, review.ip_address, "http://whois.domaintools.com/#{review.ip_address}", target: :blank %></td>

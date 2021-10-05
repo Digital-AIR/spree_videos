@@ -45,13 +45,13 @@ module Spree
       def by_order(video_reviews)
         return video_reviews unless order?
         if order == 'latest'
-          video_reviews.reorder("created_at ASC")
-        elsif order == 'oldest'
           video_reviews.reorder("created_at DESC")
+        elsif order == 'oldest'
+          video_reviews.reorder("created_at ASC")
         elsif order == 'highest'
-          video_reviews.reorder("rating ASC")
-        elsif order == 'lowest'
           video_reviews.reorder("rating DESC")
+        elsif order == 'lowest'
+          video_reviews.reorder("rating ASC")
         end
 
       end

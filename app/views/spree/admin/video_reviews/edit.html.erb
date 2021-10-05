@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:editing_review_for_html, link: @video_review.product.name) %>
+  <%= Spree.t(:editing_review_for_html, link: @video_review.video.name) %>
 <% end %>
 <%= form_for [:admin, @video_review] do |f| %>
   <div class="row">
