@@ -76,8 +76,7 @@ module Spree
         # Use callbacks to share common setup or constraints between actions.
         def collection
           params[:q] = {} if params[:q].blank?
-          videos = super.order(priority: :asc)
-          @search = videos.ransack(params[:q])
+          @search = Spree::Video.ransack(params[:q])
 
           @collection = @search.result.
               includes(video_includes).

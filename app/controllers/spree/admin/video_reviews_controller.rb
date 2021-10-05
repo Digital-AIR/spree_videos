@@ -35,9 +35,8 @@ module Spree
 
       def collection
           params[:q] = {} if params[:q].blank?
-          video_reviews = super.order(priority: :asc)
-          @search = video_reviews.ransack(params[:q])
-
+          @search = Spree::VideoReview.ransack(params[:q])
+          
           @collection = @search.result.
               includes([:video, :user, :video_feedback_reviews]).
               page(params[:page]).
