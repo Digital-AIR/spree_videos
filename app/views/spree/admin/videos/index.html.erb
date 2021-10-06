@@ -17,6 +17,15 @@
           </div>
         </div>
 
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= label_tag :q_slug_cont, Spree.t(:slug) %>
+            <%= f.text_field :slug_cont, tabindex: 1, class: "form-control js-quick-search-target" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
         <% if current_spree_user.has_spree_role?("admin") %>
           <div class="col-md-6">
             <div class="form-group">
@@ -25,8 +34,8 @@
             </div>
           </div>
         <% end %>
-
       </div>
+
       <div data-hook="admin_vendors_index_search_buttons" class="form-actions">
         <%= button Spree.t(:filter_results), 'search' %>
       </div>
@@ -34,8 +43,9 @@
   </div>
 <% end %>
 
+<%= render 'spree/admin/shared/index_table_options', collection: @collection  %>
 
-<% if @videos.any? %>
+<% if @collection.any? %>
 <div class="table-responsive">
   <table class="table" id='listing_videos' data-hook>
     <thead>
@@ -48,7 +58,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @videos.each do |video|
+      <% @collection.each do |video|
            @edit_url = edit_admin_video_url(video)
            @delete_url = spree.admin_video_url(video) %>
         <tr id="<%= spree_dom_id video %>" data-hook="tax_row">
@@ -71,3 +81,5 @@
     <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Video)) %>
   </div>
 <% end %>
+
+<%= render 'spree/admin/shared/index_table_options', collection: @collection  %>

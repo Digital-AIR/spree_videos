@@ -4,7 +4,7 @@ module Spree
       class VideoSerializer < BaseSerializer
         set_type :video
 
-        attributes :name, :slug, :description, :seo_title, :seo_description, :available_on, :discontinue_on
+        attributes :name, :slug, :description, :seo_title, :seo_description, :available_on, :discontinue_on, :avg_rating, :reviews_count
 
         has_many :products, key: :secondary_products
         has_many :taxons
@@ -12,6 +12,7 @@ module Spree
         has_one :primary_product , serializer: :product 
 
         has_one :vendor
+        has_many :video_reviews
 
       end
     end

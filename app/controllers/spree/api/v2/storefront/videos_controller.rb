@@ -44,7 +44,7 @@ module Spree
             Spree::V2::Storefront::VideoSerializer
           end
 
-   		end
+    		end
       end
     end
   end
