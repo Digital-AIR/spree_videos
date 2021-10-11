@@ -1,4 +1,4 @@
-class Spree::VideoReviewsAbility
+class Spree::VideoReviewAbility
   include CanCan::Ability
 
   def initialize(user)
