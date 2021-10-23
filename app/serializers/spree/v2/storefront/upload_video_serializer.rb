@@ -4,7 +4,8 @@ module Spree
       class UploadVideoSerializer < BaseSerializer
         set_type :upload_video
 
-        attributes :styles
+        attributes :styles, :original_url
+
       end
     end
   end
