@@ -21,7 +21,7 @@
                                   data: { autocomplete_url_value: 'taxons_api_v2',
                                           autocomplete_return_attr_value: 'pretty_name',
                                           autocomplete_multiple_value: true }, class: 'select2'%>
-    <% elsif @video.products.any? %>
+    <% elsif @video.taxons.any? %>
       <ul class="text_list">
         <% @video.taxons.each do |taxon| %>
           <li><%= taxon.pretty_name %></li>
@@ -40,7 +40,7 @@
 
 
   <%= f.field_container :products do %>
-    <%= f.label :product_ids, "Secondary Products" %>
+    <%= f.label :product_ids, "Secondary products" %>
     <% if can? :modify, Spree::VideoSecondaryProduct %>
       <%= f.select :product_ids, options_from_collection_for_select(@products, :id, :name, @video.product_ids),
                                 { include_hidden: true },

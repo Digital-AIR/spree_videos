@@ -25,8 +25,8 @@ class Spree::Video < ActiveRecord::Base
 
     def recalculate_rating
       self[:reviews_count] = video_reviews.reload.approved.count
-      self[:avg_rating] = if video_reviews_count > 0
-                            video_reviews.approved.sum(:rating).to_f / video_reviews_count
+      self[:avg_rating] = if reviews_count > 0
+                            video_reviews.approved.sum(:rating).to_f / reviews_count
                           else
                             0
                           end

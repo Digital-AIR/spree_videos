@@ -32,5 +32,6 @@ class Spree::VideoReview < ActiveRecord::Base
 
   def recalculate_video_rating
     video.recalculate_rating if video.present?
+    video.vendor.recalculate_rating
   end	
 end

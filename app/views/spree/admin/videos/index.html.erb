@@ -54,7 +54,8 @@
         <th><%= "Slug" %></th>
         <th><%= "Available On" %></th>
         <th><%= "Discontinue On" %></th>
-        <th></th>
+        <th class="text-center"><%= "Avg Rating" %></th>
+        <th ></th>
       </tr>
     </thead>
     <tbody>
@@ -66,6 +67,7 @@
           <td><%= video.slug %></td>
           <td><%= video.available_on %></td>
           <td><%= video.discontinue_on %></td>
+          <td class="text-center"><%= video.avg_rating %></td>
           <td class="actions">
             <span class="d-flex justify-content-end">
               <%= link_to_edit(video, no_text: true) if can? :edit, video %>
