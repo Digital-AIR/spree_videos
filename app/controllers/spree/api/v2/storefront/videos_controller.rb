@@ -13,7 +13,9 @@ module Spree
           def show
             render_serialized_payload { serialize_resource(resource) }
           end
-
+          
+          
+          
           private
 
           def model_class
