@@ -35,7 +35,7 @@ module Spree
 
       def collection
           params[:q] = {} if params[:q].blank?
-          @search = Spree::VideoReview.ransack(params[:q])
+          @search = Spree::VideoReview.accessible_by(current_ability).ransack(params[:q])
           
           @collection = @search.result.
               includes([:video, :user, :video_feedback_reviews]).
