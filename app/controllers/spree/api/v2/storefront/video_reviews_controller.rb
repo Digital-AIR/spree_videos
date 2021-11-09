@@ -15,9 +15,9 @@ module Spree
 
  	      def create
           video_review = Spree::VideoReview.new(review_params)
-          video_review.video = Spree::Video.find_by(id: params[:video_review][:video])
+          video_review.video = Spree::Video.find_by(slug: params[:video_review][:video])
           if not video_review.video
-            video_review.video = Spree::Video.find_by(slug: params[:video_review][:video])
+            video_review.video = Spree::Video.find_by(id: params[:video_review][:video])
           end
 		      video_review.user = spree_current_user 
 		      video_review.ip_address = request.remote_ip
