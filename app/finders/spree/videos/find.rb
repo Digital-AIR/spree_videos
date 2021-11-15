@@ -6,6 +6,7 @@ module Spree
         @taxons  = params.dig(:filter, :taxon_ids)&.split(',')
         @vendors  = params.dig(:filter, :vendor_ids)&.split(',')
         @avg_ratings  = params.dig(:filter, :avg_ratings)&.split(',')
+        @name = params.dig(:filter, :name)
 
       end
 
@@ -13,13 +14,18 @@ module Spree
         videos = by_taxons(scope)
         videos = by_vendors(videos)
         videos = by_ratings(videos)
+        videos = by_name(videos)
 
         videos
       end
 
       private
 
-      attr_reader :taxons, :vendors, :avg_ratings, :scope
+      attr_reader :name, :taxons, :vendors, :avg_ratings, :scope
+
+      def name?
+        name.present?
+      end
 
       def taxons?
         taxons.present?
@@ -31,6 +37,15 @@ module Spree
 
       def avg_ratings?
         avg_ratings.present?
+      end
+
+       def name_matcher
+        Spree::Video.arel_table[:name].matches("%#{name}%")
+      end
+
+      def by_name(videos)
+        return videos unless name?
+        videos.where(name_matcher)
       end
 
       def by_taxons(videos)
