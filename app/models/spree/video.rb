@@ -10,7 +10,8 @@ class Spree::Video < ActiveRecord::Base
 
     has_one :primary_product, class_name: 'Spree::Product', primary_key: 'primary_product_id',  foreign_key: 'id'
     has_one :upload_video, as: :viewable, dependent: :destroy, class_name: 'Spree::VideoUploadVideo'
-
+    has_one :thumbnail, as: :viewable, dependent: :destroy, class_name: 'Spree::VideoThumbnail'
+    
     has_many :video_secondary_products, class_name: 'Spree::VideoSecondaryProduct'
     has_many :products, through: :video_secondary_products, class_name: 'Spree::Product'
 
