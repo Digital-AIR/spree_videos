@@ -9,6 +9,8 @@ module Spree
         has_many :products, key: :secondary_products
         has_many :taxons
         has_one :upload_video, serializer: :upload_video
+
+        has_one :thumbnail, serializer: :thumbnail
         has_one :primary_product , serializer: :product 
 
         has_one :vendor
