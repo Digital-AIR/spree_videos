@@ -7,6 +7,7 @@ module Spree
         @vendors  = params.dig(:filter, :vendor_ids)&.split(',')
         @avg_ratings  = params.dig(:filter, :avg_ratings)&.split(',')
         @name = params.dig(:filter, :name)
+        @products = params.dig(:filter, :product_ids)&.split(',')
 
       end
 
@@ -15,13 +16,18 @@ module Spree
         videos = by_vendors(videos)
         videos = by_ratings(videos)
         videos = by_name(videos)
+        videos = by_products(videos)
 
         videos
       end
 
       private
 
-      attr_reader :name, :taxons, :vendors, :avg_ratings, :scope
+      attr_reader :name, :taxons, :vendors, :avg_ratings, :products, :scope
+
+      def products?
+        products.present?
+      end
 
       def name?
         name.present?
@@ -51,6 +57,14 @@ module Spree
       def by_taxons(videos)
         return videos unless taxons?
         videos.joins(:taxons).where(spree_video_taxons: {taxon_id: taxons})
+      end
+
+      def by_products(videos)
+        return videos unless products?
+        a = videos.joins(:primary_product).where(spree_products: {id: products})
+        b = videos.joins(:products).where(spree_video_secondary_products: {product_id: products})
+        ids = a.ids + b.ids
+        videos.where(id: ids)
       end
 
       def by_vendors(videos)
