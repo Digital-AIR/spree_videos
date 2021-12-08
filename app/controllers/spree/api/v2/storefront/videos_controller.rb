@@ -14,8 +14,6 @@ module Spree
             render_serialized_payload { serialize_resource(resource) }
           end
           
-          
-          
           private
 
           def model_class
@@ -44,6 +42,14 @@ module Spree
 
           def collection_serializer
             Spree::V2::Storefront::VideoSerializer
+          end
+
+          def collection_meta(collection)
+            super(collection).merge(filters: filters_meta)
+          end
+
+          def filters_meta
+            Spree::Api::Videos::FiltersPresenter.new().to_h
           end
 
     		end
