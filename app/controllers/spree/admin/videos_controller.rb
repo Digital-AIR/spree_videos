@@ -38,8 +38,11 @@ module Spree
         if @video.save
           if permitted_resource_params[:upload_video]
             @video.create_upload_video(attachment: permitted_resource_params[:upload_video])
-            IO.copy_stream(permitted_resource_params[:upload_video].path, 'tmp/' + permitted_resource_params[:upload_video].original_filename.to_s)
-            VideoWorker.perform_async(@video.id, permitted_resource_params[:upload_video].original_filename.to_s, permitted_resource_params[:upload_video].content_type.to_s)
+            IO.copy_stream(permitted_resource_params[:upload_video].path, 'tmp/' + permitted_resource_params[:upload_video].original_filename.to_s)              
+
+            Spree::Videos::QueueRequests.call(video_id:@video.id, 
+              video_name:permitted_resource_params[:upload_video].original_filename.to_s,content_type: permitted_resource_params[:upload_video].content_type.to_s)
+            # VideoWorker.perform_async(@video.id, permitted_resource_params[:upload_video].original_filename.to_s, permitted_resource_params[:upload_video].content_type.to_s)
           end
           redirect_to spree.admin_videos_url, notice: 'Video was successfully created.'
         else
@@ -52,7 +55,9 @@ module Spree
         if permitted_resource_params[:upload_video]
           @video.create_upload_video(attachment: permitted_resource_params[:upload_video])
           IO.copy_stream(permitted_resource_params[:upload_video].path, 'tmp/' + permitted_resource_params[:upload_video].original_filename.to_s)
-          VideoWorker.perform_async(@video.id, permitted_resource_params[:upload_video].original_filename.to_s, permitted_resource_params[:upload_video].content_type.to_s)
+          Spree::Videos::QueueRequests.call(video_id:@video.id, 
+              video_name:permitted_resource_params[:upload_video].original_filename.to_s,content_type: permitted_resource_params[:upload_video].content_type.to_s)
+          # VideoWorker.perform_async(@video.id, permitted_resource_params[:upload_video].original_filename.to_s, permitted_resource_params[:upload_video].content_type.to_s)
         end
 
         if @video.update(video_params.except(:upload_video))
@@ -66,7 +71,9 @@ module Spree
       def destroy
         @video.destroy
         if @video.destroy
-          flash[:success] = 'Video was successfully destroyed.'
+          flash[:success] = Spree.t('notice_messages.video_deleted')
+
+          # flash[:success] = 'Video was successfully destroyed.'
         else
           flash[:error] = 'Video was not successfully destroyed.'
         end
