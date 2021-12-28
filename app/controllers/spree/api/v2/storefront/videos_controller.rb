@@ -48,8 +48,26 @@ module Spree
             super(collection).merge(filters: filters_meta)
           end
 
+          def resource_meta(resource)
+            {
+            product_filters: resource_filters_meta
+            }
+          end
+
+          def resource_options(resource)
+            {
+              meta: resource_meta(resource),
+              include: resource_includes,
+              fields: sparse_fields
+            }
+          end
+
           def filters_meta
             Spree::Api::Videos::FiltersPresenter.new().to_h
+          end
+
+          def resource_filters_meta
+            Spree::Api::Products::FiltersPresenter.new(current_store, current_currency, params).to_h
           end
 
     		end
