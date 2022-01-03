@@ -39,7 +39,7 @@ module Spree
           if permitted_resource_params[:upload_video]
             @video.create_upload_video(attachment: permitted_resource_params[:upload_video])
             IO.copy_stream(permitted_resource_params[:upload_video].path, 'tmp/' + permitted_resource_params[:upload_video].original_filename.to_s)              
-
+            Spree::Videos::GenerateVideoThumbnail.call(video_id:@video.id, screenshot_time:@video.thumbnail_screen_shot_time.to_f, video_name:permitted_resource_params[:upload_video].original_filename.to_s)
             Spree::Videos::QueueRequests.call(video_id:@video.id, 
               video_name:permitted_resource_params[:upload_video].original_filename.to_s,content_type: permitted_resource_params[:upload_video].content_type.to_s)
             # VideoWorker.perform_async(@video.id, permitted_resource_params[:upload_video].original_filename.to_s, permitted_resource_params[:upload_video].content_type.to_s)
@@ -52,15 +52,22 @@ module Spree
 
       # PATCH/PUT /videos/1
       def update
+
+        old_seo_title = @video.thumbnail_screen_shot_time
         if permitted_resource_params[:upload_video]
           @video.create_upload_video(attachment: permitted_resource_params[:upload_video])
           IO.copy_stream(permitted_resource_params[:upload_video].path, 'tmp/' + permitted_resource_params[:upload_video].original_filename.to_s)
+          Spree::Videos::GenerateVideoThumbnail.call(video_id:@video.id, screenshot_time:@video.thumbnail_screen_shot_time.to_f, video_name:permitted_resource_params[:upload_video].original_filename.to_s)
           Spree::Videos::QueueRequests.call(video_id:@video.id, 
               video_name:permitted_resource_params[:upload_video].original_filename.to_s,content_type: permitted_resource_params[:upload_video].content_type.to_s)
           # VideoWorker.perform_async(@video.id, permitted_resource_params[:upload_video].original_filename.to_s, permitted_resource_params[:upload_video].content_type.to_s)
         end
 
         if @video.update(video_params.except(:upload_video))
+            if old_seo_title != @video.thumbnail_screen_shot_time
+              Spree::Videos::GenerateVideoThumbnail.call(video_id:@video.id, video_url:main_app.url_for(@video.upload_video.try(:attachment)), screenshot_time:@video.thumbnail_screen_shot_time.to_f)
+            end
+
           redirect_to spree.admin_videos_url, notice: 'Video was successfully updated.'
         else
           render :edit
@@ -114,7 +121,7 @@ module Spree
 
         # Only allow a list of trusted parameters through.
         def video_params
-          params.require(:video).permit(:vendor_id, :name,:slug,:description,:seo_title,:seo_description,:available_on,:discontinue_on,:primary_product_id,:upload_video, product_ids: [], taxon_ids:[] )
+          params.require(:video).permit(:vendor_id, :name,:slug,:description,:thumbnail_screen_shot_time,:seo_title,:seo_description,:available_on,:discontinue_on,:primary_product_id,:upload_video, product_ids: [], taxon_ids:[] )
         end
 
         def scope

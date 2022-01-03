@@ -79,6 +79,18 @@
     <%= f.error_message_on :upload_video %>
   <% end %>
 
+  <%= f.field_container :thumbnail do %>
+    <%= f.label :thumbnail if @video.thumbnail %><br>
+    <%= image_tag main_app.url_for(@video.thumbnail.url(:large)) if @video.thumbnail %>
+  <% end %>
+
+  <%= f.field_container :thumbnail_screen_shot_time do %>
+    <%= f.label :video_thumbnail_screen_shot_time %>
+    <%= f.text_field :thumbnail_screen_shot_time, class: 'form-control' %>
+    <p><b><small>(Note: in seconds)</small></b></p>
+    <%= f.error_message_on :thumbnail_screen_shot_time %>
+  <% end %>
+
   <%= f.field_container :description do %>
     <%= f.label :description %>
     <%= f.text_area :description, { rows: "10", class: "form-control spree-rte" } %>
