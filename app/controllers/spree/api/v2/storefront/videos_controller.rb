@@ -70,6 +70,16 @@ module Spree
             Spree::Api::Products::FiltersPresenter.new(current_store, current_currency, params).to_h
           end
 
+          def serialize_resource(resource)
+            resource_serializer.new(
+              resource,
+              resource_options(resource).merge(params: serializer_params)
+              # params: serializer_params,
+              # include: resource_includes,
+              # fields: sparse_fields
+            ).serializable_hash
+          end
+
     		end
       end
     end
