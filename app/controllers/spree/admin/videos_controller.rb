@@ -136,7 +136,7 @@ module Spree
           end
 
           @taxons = Taxon.order(:name)
-          @vendors = Vendor.order(Arel.sql('LOWER(name)'))
+          @vendors = Vendor.order(Arel.sql('LOWER(name)')).where(state: "active")
         end
 
     end
